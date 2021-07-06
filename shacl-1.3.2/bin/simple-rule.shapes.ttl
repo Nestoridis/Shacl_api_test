@@ -1,0 +1,69 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix ns0: <http://spinrdf.org/spin#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ns1: <http://www.w3.org/ns/shacl#> .
+@prefix ns2: <http://intelligence.csd.auth.gr/simple-rule#> .
+
+<http://intelligence.csd.auth.gr/simple-rule>
+  a owl:Ontology ;
+  ns0:imports <http://topbraid.org/spin/rdfsplus> ;
+  owl:imports <http://datashapes.org/dash> ;
+  owl:versionInfo "Created with TopBraid Composer" .
+
+<http://intelligence.csd.auth.gr/simple-rule#Student>
+  a owl:Class, <http://www.w3.org/ns/shacl#NodeShape> ;
+  rdfs:subClassOf <http://intelligence.csd.auth.gr/simple-rule#Person> ;
+  ns1:rule <http://intelligence.csd.auth.gr/simple-rule#SPARQLRule_1> .
+
+<http://intelligence.csd.auth.gr/simple-rule#Person>
+  a owl:Class, ns1:NodeShape ;
+  rdfs:subClassOf owl:Thing .
+
+<http://intelligence.csd.auth.gr/simple-rule#SPARQLRule_1>
+  a ns1:SPARQLRule ;
+  ns1:construct """PREFIX : <http://intelligence.csd.auth.gr/simple-rule#>
+CONSTRUCT {
+    $this :knows ?t .
+}
+WHERE {
+    $this :attends ?c .
+?c a :Course .
+?t :teaches ?c .
+}""" .
+
+<http://intelligence.csd.auth.gr/simple-rule#Teacher>
+  a owl:Class, ns1:NodeShape ;
+  rdfs:subClassOf <http://intelligence.csd.auth.gr/simple-rule#Person> .
+
+<http://intelligence.csd.auth.gr/simple-rule#Course>
+  a owl:Class, ns1:NodeShape ;
+  rdfs:subClassOf owl:Thing .
+
+<http://intelligence.csd.auth.gr/simple-rule#teaches>
+  a owl:ObjectProperty ;
+  rdfs:domain <http://intelligence.csd.auth.gr/simple-rule#Teacher> ;
+  rdfs:range <http://intelligence.csd.auth.gr/simple-rule#Course> .
+
+<http://intelligence.csd.auth.gr/simple-rule#knows>
+  a owl:ObjectProperty ;
+  rdfs:domain <http://intelligence.csd.auth.gr/simple-rule#Person> ;
+  rdfs:range <http://intelligence.csd.auth.gr/simple-rule#Person> .
+
+<http://intelligence.csd.auth.gr/simple-rule#attends>
+  a owl:ObjectProperty ;
+  rdfs:domain <http://intelligence.csd.auth.gr/simple-rule#Student> ;
+  rdfs:range <http://intelligence.csd.auth.gr/simple-rule#Course> .
+
+<http://intelligence.csd.auth.gr/simple-rule#george>
+  a <http://intelligence.csd.auth.gr/simple-rule#Student> ;
+  ns2:attends ns2:prolog .
+
+ns2:prolog a ns2:UndergraduateCourse .
+ns2:nick
+  a ns2:Teacher ;
+  ns2:teaches ns2:prolog .
+
+ns2:UndergraduateCourse
+  a ns1:NodeShape, owl:Class ;
+  rdfs:subClassOf ns2:Course .
+
