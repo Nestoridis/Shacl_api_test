@@ -27,3 +27,20 @@ bash shaclinfer.sh -datafile simple-rule.shapes_infer.ttl
         <http://intelligence.csd.auth.gr/simple-rule#knows>
                 <http://intelligence.csd.auth.gr/simple-rule#nick> .
 # end of output#
+
+
+
+
+-------------------------------------------------------------------------------------------------
+
+# if there is a problem with java in line : bash infer --rdfs=../../simple-rule.shapes.ttl ../../simple-rule.shapes.ttl > ../../simple-rule.shapes_infer.ttl
+
+#run : 
+sudo update-alternatives --config java
+
+#and select this option 
+
+Selection    Path                                         Priority   Status
+------------------------------------------------------------
+* 0            /usr/lib/jvm/java-11-openjdk-amd64/bin/java   1111      auto mode
+
